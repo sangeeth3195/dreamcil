@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "989512845778",
+    "firebase_url": "https://dreamcil-471a4.firebaseio.com",
+    "project_id": "dreamcil-471a4",
+    "storage_bucket": "dreamcil-471a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989512845778:android:4d342d3c884159df6da00b",
+        "android_client_info": {
+          "package_name": "com.dreamcil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989512845778-gquqlu61fd0k33m5rel7bkq3ua2i6d01.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dreamcil",
+            "certificate_hash": "aa8851febb6340e48004e59e23f749e312cd29c0"
+          }
+        },
+        {
+          "client_id": "989512845778-lsk19dp5rj1qgsu860pdv1vpu5l3d9lt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXwEzO2Kh_AoAj0RasPh3izGNVYpAIZRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989512845778-lsk19dp5rj1qgsu860pdv1vpu5l3d9lt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
