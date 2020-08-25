@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:core';
+import 'package:dreamcil/Home.dart';
+import 'package:dreamcil/details.dart';
+import 'package:dreamcil/fakedata/ScopeManage.dart';
 import 'package:dreamcil/utils/permision.dart';
 import 'package:dreamcil/utils/string.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -10,12 +13,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import 'dashboard.dart';
 import 'login.dart';
 
 void main() {
   runApp(
+
     MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -37,6 +42,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  AppModel appModel = AppModel();
+
+  final routes = <String,WidgetBuilder>{
+    Home.route:(BuildContext context)=>Home(),
+
+  };
   var _visible = true;
   double screenWidth = 0.0;
   double screenheight = 0.0;
@@ -46,17 +57,17 @@ class _SplashScreenState extends State<SplashScreen>
   void navigationPage() async {
     final dynamic storage = await PermissionFun().storagePermision();
 //    if (storage.toString() == 'PermissionStatus.granted') {
-      var bearer ='';
-      if (bearer == null || bearer == '') {
-        await Navigator.pushAndRemoveUntil(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeft,
-            child: LoginPage(),
-          ),
-              (Route<dynamic> route) => false,
-        );
-      }
+    var bearer ='';
+    if (bearer == null || bearer == '') {
+      await Navigator.pushAndRemoveUntil(
+        context,
+        PageTransition(
+          type: PageTransitionType.rightToLeft,
+          child: LoginPage(),
+        ),
+            (Route<dynamic> route) => false,
+      );
+    }
 //    } else {
 //      await Fluttertoast.showToast(msg: permission_warning);
 //    }
@@ -70,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen>
     setState(() {
       _visible = !_visible;
     });
-    navigationPage();
+//    navigationPage();
   }
 
   @override
@@ -86,6 +97,16 @@ class _SplashScreenState extends State<SplashScreen>
     ]);
     screenWidth = MediaQuery.of(context).size.width;
     screenheight = MediaQuery.of(context).size.height;
+    return ScopedModel<AppModel>(
+      model: appModel,
+      child: MaterialApp(
+        home: Home(appModel: appModel,),
+        routes: routes,
+        theme: ThemeData(
+            primaryColor: Colors.white
+        ),
+      ),
+    );
     return Scaffold(
 
     );
