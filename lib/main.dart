@@ -20,7 +20,6 @@ import 'login.dart';
 
 void main() {
   runApp(
-
     MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -42,12 +41,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  AppModel appModel = AppModel();
+ /* AppModel appModel = AppModel();
 
   final routes = <String,WidgetBuilder>{
     Home.route:(BuildContext context)=>Home(),
 
-  };
+  };*/
+
+//  Future<Timer> startTime() async {
+//    var _duration = Duration(seconds: 5);
+//    return Timer(_duration, navigationPage);
+//  }
+
   var _visible = true;
   double screenWidth = 0.0;
   double screenheight = 0.0;
@@ -81,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen>
     setState(() {
       _visible = !_visible;
     });
-//    navigationPage();
+    navigationPage();
   }
 
   @override
@@ -97,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
     ]);
     screenWidth = MediaQuery.of(context).size.width;
     screenheight = MediaQuery.of(context).size.height;
-    return ScopedModel<AppModel>(
+   /* return ScopedModel<AppModel>(
       model: appModel,
       child: MaterialApp(
         home: Home(appModel: appModel,),
@@ -106,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen>
             primaryColor: Colors.white
         ),
       ),
-    );
+    );*/
     return Scaffold(
 
     );

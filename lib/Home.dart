@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_rating/flutter_rating.dart';
 import "Details.dart";
 import 'fakedata/ScopeManage.dart';
+import 'onboardingscreen.dart';
 
 class Home extends StatefulWidget {
   AppModel appModel;
@@ -33,7 +34,7 @@ class HomeState extends State<Home> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Details()) //detail: data[index]
+                          builder: (context) => OnboardingScreen()) //detail: data[index]
                       );
                 },
                 child: Container(
@@ -145,7 +146,6 @@ class HomeState extends State<Home> {
                   child: Icon(Icons.shopping_cart),
                 ),
               ),
-
             ],
           )
         ],

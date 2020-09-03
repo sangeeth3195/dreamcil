@@ -30,13 +30,16 @@ dependencies:
   page_transition: ^1.1.5
   firebase_auth_ui: ^1.0.1
   firebase_core: ^0.4.4+3
+  firebase_crashlytics: ^0.1.4+1
   firebase_auth: ^0.16.0
   url_launcher: ^5.5.0
+  sticky_headers: ^0.1.8+1
   flutter_rating: ^0.0.2
   documents_picker: ^1.0.0
   cloud_firestore: ^0.13.5
   firebase_messaging: ^6.0.15
   firebase_analytics: ^5.0.14
+  introduction_screen: ^1.0.9
   flutter_secure_storage: ^3.3.1+1
   data_connection_checker: ^0.3.4
   youtube_player_flutter: ^7.0.0+7
