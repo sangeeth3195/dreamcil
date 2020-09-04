@@ -56,34 +56,6 @@ class Profile extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10.0),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text("285"),
-                                    Text("Likes")
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text("3025"),
-                                    Text("Comments")
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  children: <Widget>[
-                                    Text("650"),
-                                    Text("Favourites")
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),
