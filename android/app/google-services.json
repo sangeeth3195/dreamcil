@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "989512845778-nabpi94jnrqmvhr2pcueavdbssj7r678.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dreamcil",
+            "certificate_hash": "aa0de9fd30aa01464b423c52a16b71eaddd65309"
+          }
+        },
+        {
           "client_id": "989512845778-gquqlu61fd0k33m5rel7bkq3ua2i6d01.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
