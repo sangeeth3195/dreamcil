@@ -1,8 +1,7 @@
 
-import 'package:dreamcil/profile.dart';
+
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpScreen extends StatefulWidget {

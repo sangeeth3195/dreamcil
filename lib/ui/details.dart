@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'fakedata/global.dart';
+import '../fakedata/global.dart';
 
 class Details extends StatefulWidget {
   @override

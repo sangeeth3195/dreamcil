@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../dealership.dart';
+import '../ui/dealership.dart';
 import 'app_theme.dart';
 
 class Borders {

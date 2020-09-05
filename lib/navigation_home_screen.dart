@@ -1,21 +1,21 @@
 
-import 'package:dreamcil/addcart.dart';
-import 'package:dreamcil/broucher.dart';
-import 'package:dreamcil/dashboard.dart';
-import 'package:dreamcil/notification.dart';
-import 'package:dreamcil/profile.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/addcart.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/broucher.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/dashboard.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/notification.dart';
+import 'package:dreamcil/ui/help_screen.dart';
+import 'package:dreamcil/ui/profile.dart';
 import 'package:dreamcil/utils/app_theme.dart';
-import 'package:dreamcil/videos.dart';
-import 'package:dreamcil/wishlist.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/videos.dart';
+import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/wishlist.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_drawer/drawer_user_controller.dart';
 import 'custom_drawer/home_drawer.dart';
-import 'dealership.dart';
-import 'feedback_screen.dart';
-import 'gallery.dart';
-import 'help_screen.dart';
-import 'invite_friend_screen.dart';
+import 'ui/dealership.dart';
+import 'ui/feedback_screen.dart';
+import 'ui/gallery.dart';
+import 'ui/invite_friend_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override

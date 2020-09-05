@@ -1,8 +1,7 @@
 import 'package:dreamcil/Signin/models/state.dart';
-import 'package:dreamcil/login.dart';
+import 'package:dreamcil/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:dreamcil/Signin/util/state_widget.dart';
-import 'package:dreamcil/Signin/ui/screens/sign_in.dart';
 import 'package:dreamcil/Signin/ui/widgets/loading.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -89,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.pushNamed(context, '/signin');
         },
       );
-//check for null https://stackoverflow.com/questions/49775261/check-null-in-ternary-operation
+
+      //check for null https://stackoverflow.com/questions/49775261/check-null-in-ternary-operation
       final userId = appState?.firebaseUserAuth?.uid ?? '';
       final email = appState?.firebaseUserAuth?.email ?? '';
       final firstName = appState?.user?.firstName ?? '';
