@@ -1,4 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dreamcil/Signin/models/user.dart';
+import 'package:dreamcil/Signin/ui/widgets/loading.dart';
+import 'package:dreamcil/Signin/util/auth.dart';
+import 'package:dreamcil/Signin/util/state_widget.dart';
+import 'package:dreamcil/Signin/util/validator.dart';
+import 'package:dreamcil/Widgets/CustomIcons.dart';
+import 'package:dreamcil/Widgets/SocialIcons.dart';
 import 'package:dreamcil/utils/string.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import 'Signin/ui/widgets/loading.dart';
-import 'Signin/util/auth.dart';
-import 'Signin/util/state_widget.dart';
-import 'Signin/util/validator.dart';
-import 'Widgets/CustomIcons.dart';
-import 'Widgets/SocialIcons.dart';
-import 'dashboard.dart';
-import 'navigation_home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -39,6 +37,56 @@ class _LoginPage extends State<LoginPage> {
 
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
+  _showDialog(userid, firstname, lasstname, email) async {
+    final TextEditingController _mob = new TextEditingController();
+
+    await showDialog<String>(
+      context: context,
+      child: new _SystemPadding(
+        child: new AlertDialog(
+          contentPadding: const EdgeInsets.all(16.0),
+          content: new Row(
+            children: <Widget>[
+              new Expanded(
+                child: new TextField(
+                  controller: _mob,
+                  autofocus: true,
+                  decoration: new InputDecoration(
+                      labelText: 'Mobile Number', hintText: '9876543210'),
+                ),
+              )
+            ],
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                child: const Text('CANCEL'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            new FlatButton(
+                child: const Text('Submit'),
+                onPressed: () async {
+                  if (_mob.text.length == 10) {
+                    var user = await Auth.addUserSettingsDB(new User(
+                      userId: userid,
+                      email: email,
+                      mobilenumber: _mob.text,
+                      firstName: firstname,
+                      lastName: lasstname,
+                    ));
+                    Navigator.pop(context);
+                    await Navigator.pushNamed(context, '/home');
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: 'Please Fill the Mobile Number');
+                  }
+                })
+          ],
+        ),
+      ),
+    );
+  }
+
   _login() async {
     try {
       setState(() {
@@ -48,19 +96,23 @@ class _LoginPage extends State<LoginPage> {
       await _googleSignIn.signIn();
 
       try {
-        var id=_googleSignIn.currentUser.id;
-        await Firestore.instance.document("users/$id").get().then((doc) {
-          print(doc);
+        var id = _googleSignIn.currentUser.id;
+        await Firestore.instance.document("users/$id").get().then((doc) async {
+          if (doc.data != null) {
+            User user = await Auth.getUserFirestore(id);
+            await Auth.storeUserLocal(user);
+            await Navigator.pushNamed(context, '/home');
+          } else {
+            _showDialog(
+                _googleSignIn.currentUser.id,
+                _googleSignIn.currentUser.displayName,
+                _googleSignIn.currentUser.displayName,
+                _googleSignIn.currentUser.email);
+          }
+          print(doc.data);
         });
       } catch (e) {
         print(e.toString());
-      }
-
-      var newuser = await Auth.checkUserExist(_googleSignIn.currentUser.id);
-      if (newuser == false) {
-       await Navigator.pushNamed(context, '/signup');
-      } else {
-        await Navigator.pushNamed(context, '/');
       }
 
       setState(() {
@@ -510,5 +562,20 @@ class FormCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _SystemPadding extends StatelessWidget {
+  final Widget child;
+
+  _SystemPadding({Key key, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var mediaQuery = MediaQuery.of(context);
+    return new AnimatedContainer(
+        padding: mediaQuery.viewInsets,
+        duration: const Duration(milliseconds: 300),
+        child: child);
   }
 }

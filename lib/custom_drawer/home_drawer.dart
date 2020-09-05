@@ -1,5 +1,5 @@
 
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/login.dart';
+import 'package:dreamcil/ui/login.dart';
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,13 +1,13 @@
 
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/addcart.dart';
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/broucher.dart';
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/dashboard.dart';
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/notification.dart';
+import 'package:dreamcil/ui/addcart.dart';
+import 'package:dreamcil/ui/broucher.dart';
+import 'package:dreamcil/ui/dashboard.dart';
 import 'package:dreamcil/ui/help_screen.dart';
+import 'package:dreamcil/ui/notification.dart';
 import 'package:dreamcil/ui/profile.dart';
+import 'package:dreamcil/ui/videos.dart';
+import 'package:dreamcil/ui/wishlist.dart';
 import 'package:dreamcil/utils/app_theme.dart';
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/videos.dart';
-import 'file:///D:/Sangeeth/00_Dreamcil/Dreamcil_New/lib/ui/wishlist.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_drawer/drawer_user_controller.dart';
