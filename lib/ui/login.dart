@@ -101,7 +101,7 @@ class _LoginPage extends State<LoginPage> {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
       await _changeLoadingVisible();
       await StateWidget.of(context).logInUser(email, password);
-      await Navigator.pushNamed(context, '/');
+      await Navigator.pushNamed(context, '/addproduct');
     } catch (e) {
       _changeLoadingVisible();
       print("Sign In Error: $e");

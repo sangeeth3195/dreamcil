@@ -1,4 +1,6 @@
 import 'package:dreamcil/Signin/ui/theme.dart';
+import 'package:dreamcil/ui/cart.dart';
+import 'package:dreamcil/ui/dashboard.dart';
 import 'package:dreamcil/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:dreamcil/Signin/util/state_widget.dart';
@@ -16,12 +18,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MyApp Title',
       theme: buildTheme(),
+      //onGenerateRoute: Navigation.router.generator,
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => ProductAdd(),
+        '/': (context) => LoginPage(),
         '/signin': (context) => LoginPage(),
         '/signup': (context) => SignUpScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
+        '/dashboard': (context) => Dashboard(),
+        '/addproduct': (context) => OrderPage(),
+        '/OrderPage': (context) => OrderPage(),
       },
     );
   }
