@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       //onGenerateRoute: Navigation.router.generator,
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => ProductAdd(),
+        '/': (context) => HomeScreen(),
         '/signin': (context) => LoginPage(),
         '/signup': (context) => SignUpScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),

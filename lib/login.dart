@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dreamcil/utils/string.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,15 @@ class _LoginPage extends State<LoginPage> {
       });
 
       await _googleSignIn.signIn();
+
+      try {
+        var id=_googleSignIn.currentUser.id;
+        await Firestore.instance.document("users/$id").get().then((doc) {
+          print(doc);
+        });
+      } catch (e) {
+        print(e.toString());
+      }
 
       var newuser = await Auth.checkUserExist(_googleSignIn.currentUser.id);
       if (newuser == false) {
