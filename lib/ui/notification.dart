@@ -1,27 +1,26 @@
-import 'package:dreamcil/profile.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-class CartScreen extends StatefulWidget {
+class NotificationScreen extends StatefulWidget {
   @override
-  _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
+  _NotificationListState createState() => _NotificationListState();
 }
 
-class _ShoppingCartScreenState extends State<CartScreen> {
+class _NotificationListState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    return EmptyShoppingCartScreen();
+    return EmptyNotificationListScreen();
   }
 }
 
-class EmptyShoppingCartScreen extends StatefulWidget {
+class EmptyNotificationListScreen extends StatefulWidget {
   @override
-  _EmptyShoppingCartScreenState createState() =>
-      _EmptyShoppingCartScreenState();
+  _EmptyNotificationListScreenState createState() =>
+      _EmptyNotificationListScreenState();
 }
 
-class _EmptyShoppingCartScreenState extends State<EmptyShoppingCartScreen> {
+class _EmptyNotificationListScreenState extends State<EmptyNotificationListScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,10 +31,9 @@ class _EmptyShoppingCartScreenState extends State<EmptyShoppingCartScreen> {
               Scaffold(
                 appBar: AppBar(
                   title: Text(
-                    '      Cart',
+                    'Notification',
                     style: TextStyle(
                       color: Colors.green,
-                      letterSpacing: .8,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -54,26 +52,20 @@ class _EmptyShoppingCartScreenState extends State<EmptyShoppingCartScreen> {
                       width: double.infinity,
                       height: 250,
                       child: Image.asset(
-                        "assets/images/empty_wishlist.png",
-                        height: 250,
+                        "assets/images/empty_notification.png",
+                        height: 180,
                         width: double.infinity,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                      child: Container(
-                        color: Color(0xFFFFFFFF),
                       ),
                     ),
                     Container(
                       width: double.infinity,
                       child: Text(
-                        "You haven't anything to wish List",
+                        "Empty Notification",
                         style: TextStyle(
                           color: Color(0xFF67778E),
                           fontFamily: 'Roboto-Light.ttf',
-                          fontSize: 20,
-                          fontStyle: FontStyle.normal,
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -127,48 +119,5 @@ class _EmptyShoppingCartScreenState extends State<EmptyShoppingCartScreen> {
         ),
       ),*/
     );
-   /* return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(color: Colors.white),
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 70,
-              child: Container(
-                color: Color(0xFFFFFFFF),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 250,
-              child: Image.asset(
-                "assets/images/cart_empty.png",
-                height: 250,
-                width: double.infinity,
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              child: Container(
-                color: Color(0xFFFFFFFF),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Text(
-                "You haven't anything to cart",
-                style: TextStyle(
-                  color: Color(0xFF67778E),
-                  fontFamily: 'Roboto-Light.ttf',
-                  fontSize: 20,
-                  fontStyle: FontStyle.normal,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ),
-      ),
-    );*/
   }
 }

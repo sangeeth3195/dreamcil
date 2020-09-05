@@ -1,8 +1,8 @@
+import 'package:dreamcil/fakedata/ScopeManage.dart';
 import "package:scoped_model/scoped_model.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_rating/flutter_rating.dart';
-import "Details.dart";
-import 'fakedata/ScopeManage.dart';
+
 import 'onboardingscreen.dart';
 
 class Home extends StatefulWidget {

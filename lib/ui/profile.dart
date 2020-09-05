@@ -1,8 +1,8 @@
+import 'package:dreamcil/fakedata/ScopeManage.dart';
 import 'package:flutter/material.dart';
 
 import 'Home.dart';
 import 'details.dart';
-import 'fakedata/ScopeManage.dart';
 
 class Profile extends StatelessWidget {
   final image =

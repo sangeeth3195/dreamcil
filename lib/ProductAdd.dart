@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 
-import 'package:dreamcil/Signin/models/user.dart';
 import 'package:dreamcil/Signin/util/auth.dart';
 import 'package:dreamcil/Signin/util/validator.dart';
 import 'package:dreamcil/Signin/ui/widgets/loading.dart';

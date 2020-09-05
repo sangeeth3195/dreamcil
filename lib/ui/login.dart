@@ -1,19 +1,17 @@
-import 'package:dreamcil/utils/string.dart';
+
+import 'package:dreamcil/Signin/ui/widgets/loading.dart';
+import 'package:dreamcil/Signin/util/auth.dart';
+import 'package:dreamcil/Signin/util/state_widget.dart';
+import 'package:dreamcil/Signin/util/validator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'Signin/ui/widgets/loading.dart';
-import 'Signin/util/auth.dart';
-import 'Signin/util/state_widget.dart';
-import 'Signin/util/validator.dart';
-import 'Widgets/CustomIcons.dart';
-import 'Widgets/SocialIcons.dart';
-import 'dashboard.dart';
-import 'navigation_home_screen.dart';
+import '../Widgets/CustomIcons.dart';
+import '../Widgets/SocialIcons.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -102,7 +100,6 @@ class _LoginPage extends State<LoginPage> {
     try {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
       await _changeLoadingVisible();
-      //need await so it has chance to go through error if found.
       await StateWidget.of(context).logInUser(email, password);
       await Navigator.pushNamed(context, '/');
     } catch (e) {
