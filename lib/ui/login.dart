@@ -166,7 +166,7 @@ class _LoginPage extends State<LoginPage> {
       await _changeLoadingVisible();
       //need await so it has chance to go through error if found.
       await StateWidget.of(context).logInUser(email, password);
-      await Navigator.pushNamed(context, '/');
+      await Navigator.pushNamed(context, '/addproduct');
     } catch (e) {
       _changeLoadingVisible();
       print("Sign In Error: $e");
