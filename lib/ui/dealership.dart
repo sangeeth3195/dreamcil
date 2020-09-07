@@ -43,11 +43,11 @@ class _DealershipScreen4State extends State<Dealership> {
   }
 
   void _getDocuments() async {
+    _changeLoadingVisible();
     docPaths = await DocumentsPicker.pickDocuments;
     if (!mounted) return;
     File file = new File(docPaths[0]);
     print(file.length());
-    _changeLoadingVisible();
 
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('dealership/${user.userId}');
@@ -56,15 +56,17 @@ class _DealershipScreen4State extends State<Dealership> {
     print('File Uploaded');
     storageReference.getDownloadURL().then((fileURL) {
       setState(() {
-        _uploadedFileURL = fileURL;
         _changeLoadingVisible();
+
+        _uploadedFileURL = fileURL;
       });
     });
   }
 
   Future<String> _pickSaveImage(String imageId) async {
-    File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
     _changeLoadingVisible();
+
+    File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('dealership_pan/${user.userId}');
@@ -73,10 +75,11 @@ class _DealershipScreen4State extends State<Dealership> {
     print('File Uploaded');
     storageReference.getDownloadURL().then((fileURL) {
       setState(() {
-        _changeLoadingVisible();
 
         _uploadedFileURLPAN = fileURL;
       });
+      _changeLoadingVisible();
+
     });
   }
 
@@ -268,9 +271,9 @@ class _DealershipScreen4State extends State<Dealership> {
             ),
             SpaceW8(),
             Text(
-              StringConst.FILECHOOSEN,
+              _uploadedFileURL.length!=0?'files uploaded':StringConst.FILECHOOSEN,
               style: theme.textTheme.subtitle.copyWith(
-                color: AppTheme.blackShade10,
+                color: _uploadedFileURL.length!=0?AppTheme.green:AppTheme.blackShade10,
                 fontSize: Sizes.TEXT_SIZE_14,
               ),
             ),
@@ -305,9 +308,9 @@ class _DealershipScreen4State extends State<Dealership> {
             ),
             SpaceW8(),
             Text(
-              StringConst.FILECHOOSEN,
+              _uploadedFileURLPAN.length!=0?'files uploaded':StringConst.FILECHOOSEN,
               style: theme.textTheme.subtitle.copyWith(
-                color: AppTheme.blackShade10,
+                color: _uploadedFileURLPAN.length!=0?AppTheme.green:AppTheme.blackShade10,
                 fontSize: Sizes.TEXT_SIZE_14,
               ),
             ),
