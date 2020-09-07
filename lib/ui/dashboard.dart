@@ -76,11 +76,12 @@ class HomePage extends State<DashboardHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '      Dreamcil',
+          '       Dreamcil',
           style: TextStyle(
             color: Colors.green,
+            fontSize: 18,
             letterSpacing: .8,
-            fontStyle: FontStyle.italic,
+            fontStyle: FontStyle.normal,
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -210,7 +211,9 @@ class HomePage extends State<DashboardHome> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Details(
-                          name: snapshot.data.documents[indx].data['name'], picture: snapshot.data.documents[indx].data['pic'],price: snapshot.data.documents[indx].data['Price'],),
+                          name: snapshot.data.documents[indx].data['name'],
+                        picture: snapshot.data.documents[indx].data['pic'],price:
+                      snapshot.data.documents[indx].data['Price'],),
                     ),
                   );
                 },

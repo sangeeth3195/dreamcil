@@ -14,19 +14,19 @@ List<Color> productColors = [
 List icons = [
   Icon(
     FontAwesomeIcons.plug,
-    color: accent,
+    color: green,
   ),
   Icon(
     FontAwesomeIcons.lightbulb,
-    color: accent,
+    color: green,
   ),
   Icon(
     FontAwesomeIcons.expand,
-    color: accent,
+    color: green,
   ),
   Icon(
     FontAwesomeIcons.list,
-    color: accent,
+    color: green,
   ),
 ];
 List<Map<String, dynamic>> productSpecifications = [

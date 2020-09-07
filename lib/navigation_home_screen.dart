@@ -1,4 +1,5 @@
 
+import 'package:dreamcil/ProductAdd.dart';
 import 'package:dreamcil/ui/addcart.dart';
 import 'package:dreamcil/ui/broucher.dart';
 import 'package:dreamcil/ui/dashboard.dart';
@@ -75,6 +76,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.Dealership) {
         setState(() {
           screenView = Dealership();
+        });
+      }else if (drawerIndex == DrawerIndex.AddProduct) {
+        setState(() {
+          screenView = ProductAdd();
         });
       }else if (drawerIndex == DrawerIndex.Broucher) {
         setState(() {

@@ -1,11 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dreamcil/Signin/util/auth.dart';
+import 'package:dreamcil/ui/order_page.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../fakedata/global.dart';
 
 class Details extends StatefulWidget {
   Details(
-      {Key key, @required this.name, @required this.picture, @required this.price})
+      {Key key,
+      @required this.name,
+      @required this.picture,
+      @required this.price})
       : super(key: key);
 
   final String name;
@@ -20,13 +28,17 @@ class Details extends StatefulWidget {
 int indicatorActive = 0;
 
 class _DetailsState extends State<Details> {
-
   _DetailsState(
-      {Key key, @required this.name, @required this.picture, @required this.price});
+      {Key key,
+      @required this.name,
+      @required this.picture,
+      @required this.price});
 
   final String name;
   final String picture;
   final String price;
+  bool _loadingVisible = false;
+  final firestoreInstance = Firestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +111,7 @@ class _DetailsState extends State<Details> {
             ),
             Expanded(
               child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(25),
@@ -115,16 +124,13 @@ class _DetailsState extends State<Details> {
                     Expanded(
                       child: Container(
                         padding:
-                        EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                            EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Center(
                               child: Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 5,
+                                width: MediaQuery.of(context).size.width / 5,
                                 height: 5,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
@@ -184,7 +190,7 @@ class _DetailsState extends State<Details> {
                             Row(
                               children: List<Widget>.generate(
                                 4,
-                                    (f) {
+                                (f) {
                                   return Expanded(
                                     child: Container(
                                       margin: EdgeInsets.all(5.0),
@@ -235,65 +241,75 @@ class _DetailsState extends State<Details> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(
-                        left: 15.0,
-                      ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 50.0,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                "Other Products",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 19,
-                                  color: Colors.white,
+                          Flexible(
+                            fit: FlexFit.tight,
+                            flex: 1,
+                            child: RaisedButton(
+                              onPressed: () {
+                                _addtoCart(
+                                    productName: name,
+                                    pic: picture,
+                                    percentage: price,
+                                    price: price,
+                                    dis_price: price,
+                                    context: context);
+                              },
+                              color: beige,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.card_travel,
+                                      color: Colors.green,
+                                    ),
+                                    SizedBox(
+                                      width: 4.0,
+                                    ),
+                                    Text(
+                                      "ADD TO BAG",
+                                      style: TextStyle(color: Colors.green),
+                                    ),
+                                  ],
                                 ),
-                                softWrap: true,
-                                overflow: TextOverflow.clip,
                               ),
-                              SizedBox(
-                                height: 9.0,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        products[0]["pictureLink"]),
-                                    backgroundColor: productColors[0],
-                                  ),
-                                  CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        products[1]["pictureLink"]),
-                                    backgroundColor: productColors[1],
-                                  ),
-                                  CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        products[2]["pictureLink"]),
-                                    backgroundColor: productColors[2],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15,)
-                            ],
+                            ),
                           ),
-                          Spacer(),
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                padding: EdgeInsets.all(25),
-                                decoration: BoxDecoration(
-                                  color: green,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(45),
-                                  ),
-                                ),
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
+                          Flexible(
+                            flex: 1,
+                            child: RaisedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return OrderPage(prod_name: name,
+                                        prod_pic: picture,
+                                        prod_quantity: '1',
+                                        prod_price: '1000',);
+                                    }));
+                              },
+                              color: Colors.green,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.card_travel,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 4.0,
+                                    ),
+                                    Text(
+                                      "BUY NOW",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -309,6 +325,43 @@ class _DetailsState extends State<Details> {
         ),
       ),
     );
+  }
+
+  Future<void> _changeLoadingVisible() async {
+    setState(() {
+      _loadingVisible = !_loadingVisible;
+    });
+  }
+
+  void _addtoCart(
+      {String productName,
+      String pic,
+      String percentage,
+      String price,
+      String dis_price,
+      BuildContext context}) async {
+    try {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      _changeLoadingVisible();
+      firestoreInstance.collection("add_to_cart").add({
+        "name": productName,
+        "pic": pic,
+        "Price": price,
+        "Discountprice": price,
+        "Discountpercentage": price,
+      }).then((value) {
+        print(value.documentID);
+        _changeLoadingVisible();
+      });
+    } catch (e) {
+      _changeLoadingVisible();
+      String exception = Auth.getExceptionText(e);
+      Flushbar(
+        title: "Something went Wrong!",
+        message: exception,
+        duration: Duration(seconds: 3),
+      )..show(context);
+    }
   }
 }
 
