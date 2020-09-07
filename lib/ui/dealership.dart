@@ -1,10 +1,19 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:documents_picker/documents_picker.dart';
+import 'package:dreamcil/Signin/models/user.dart';
+import 'package:dreamcil/Signin/ui/widgets/loading.dart';
+import 'package:dreamcil/Signin/util/auth.dart';
 import 'package:dreamcil/Signin/util/validator.dart';
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:dreamcil/utils/borders.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Dealership extends StatefulWidget {
   @override
@@ -15,12 +24,63 @@ class _DealershipScreen4State extends State<Dealership> {
   bool isSwitched = false;
 
   List<String> docPaths;
+  final TextEditingController _email = new TextEditingController();
+  final TextEditingController _name = new TextEditingController();
+  final TextEditingController _mobile = new TextEditingController();
+  final TextEditingController _address = new TextEditingController();
+  final TextEditingController _message = new TextEditingController();
+  final TextEditingController _country = new TextEditingController();
+  bool _loadingVisible = false;
+  User user;
+  String _uploadedFileURL = "";
+  String _uploadedFileURLPAN = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Auth.getUserLocal().then((value) => user = value);
+  }
 
   void _getDocuments() async {
+    _changeLoadingVisible();
     docPaths = await DocumentsPicker.pickDocuments;
-
     if (!mounted) return;
-    setState(() {});
+    File file = new File(docPaths[0]);
+    print(file.length());
+
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child('dealership/${user.userId}');
+    StorageUploadTask uploadTask = storageReference.putFile(file);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _changeLoadingVisible();
+
+        _uploadedFileURL = fileURL;
+      });
+    });
+  }
+
+  Future<String> _pickSaveImage(String imageId) async {
+    _changeLoadingVisible();
+
+    File imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child('dealership_pan/${user.userId}');
+    StorageUploadTask uploadTask = storageReference.putFile(imageFile);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+
+        _uploadedFileURLPAN = fileURL;
+      });
+      _changeLoadingVisible();
+
+    });
   }
 
   @override
@@ -29,66 +89,68 @@ class _DealershipScreen4State extends State<Dealership> {
     var heightOfScreen = MediaQuery.of(context).size.height;
     var widthOfScreen = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Container(
-          child: Stack(
-            children: <Widget>[
-              ClipShadowPath(
-                clipper: LoginDesign4ShapeClipper(),
-                shadow: Shadow(blurRadius: 24, color: AppTheme.green),
-                child: Container(
-                  height: heightOfScreen * 0.4,
-                  width: widthOfScreen,
-                  color: AppTheme.green,
-                  child: Container(
-                    margin: EdgeInsets.only(left: Sizes.MARGIN_24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        body: LoadingScreen(
+            child: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: Container(
+                child: Stack(
+                  children: <Widget>[
+                    ClipShadowPath(
+                      clipper: LoginDesign4ShapeClipper(),
+                      shadow: Shadow(blurRadius: 24, color: AppTheme.green),
+                      child: Container(
+                        height: heightOfScreen * 0.4,
+                        width: widthOfScreen,
+                        color: AppTheme.green,
+                        child: Container(
+                          margin: EdgeInsets.only(left: Sizes.MARGIN_24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: heightOfScreen * 0.1,
+                              ),
+                              Text(
+                                StringConst.WELCOME_BACK,
+                                style: theme.textTheme.headline6.copyWith(
+                                  fontSize: Sizes.TEXT_SIZE_20,
+                                  color: AppTheme.white,
+                                ),
+                              ),
+                              Text(
+                                StringConst.Dealership,
+                                style: theme.textTheme.headline4.copyWith(
+                                  color: AppTheme.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    ListView(
+                      padding: EdgeInsets.all(Sizes.PADDING_0),
                       children: <Widget>[
                         SizedBox(
-                          height: heightOfScreen * 0.1,
+                          height: heightOfScreen * 0.25,
                         ),
-                        Text(
-                          StringConst.WELCOME_BACK,
-                          style: theme.textTheme.headline6.copyWith(
-                            fontSize: Sizes.TEXT_SIZE_20,
-                            color: AppTheme.white,
-                          ),
-                        ),
-                        Text(
-                          StringConst.Dealership,
-                          style: theme.textTheme.headline4.copyWith(
-                            color: AppTheme.white,
-                          ),
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
+                          child: _buildForm(),
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
-              ListView(
-                padding: EdgeInsets.all(Sizes.PADDING_0),
-                children: <Widget>[
-                  SizedBox(
-                    height: heightOfScreen * 0.25,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: Sizes.MARGIN_20),
-                    child: _buildForm(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            inAsyncCall: _loadingVisible));
   }
 
   Widget _buildForm() {
@@ -96,6 +158,7 @@ class _DealershipScreen4State extends State<Dealership> {
     return Column(
       children: <Widget>[
         CustomTextFormField(
+          controller: _name,
           textInputType: TextInputType.text,
           labelText: StringConst.NAME,
           border: Borders.customOutlineInputBorder(),
@@ -110,6 +173,7 @@ class _DealershipScreen4State extends State<Dealership> {
         ),
         SpaceH20(),
         CustomTextFormField(
+          controller: _email,
           textInputType: TextInputType.emailAddress,
           labelText: StringConst.EMAIL_ADDRESS,
           border: Borders.customOutlineInputBorder(),
@@ -123,6 +187,7 @@ class _DealershipScreen4State extends State<Dealership> {
         ),
         SpaceH12(),
         CustomTextFormField(
+          controller: _mobile,
           textInputType: TextInputType.phone,
           labelText: StringConst.MOBILE,
           border: Borders.customOutlineInputBorder(),
@@ -136,6 +201,7 @@ class _DealershipScreen4State extends State<Dealership> {
         ),
         SpaceH20(),
         CustomTextFormField(
+          controller: _address,
           textInputType: TextInputType.text,
           labelText: StringConst.ADDRESS,
           border: Borders.customOutlineInputBorder(),
@@ -149,6 +215,7 @@ class _DealershipScreen4State extends State<Dealership> {
         ),
         SpaceH12(),
         CustomTextFormField(
+          controller: _country,
           textInputType: TextInputType.text,
           labelText: StringConst.COUNTRY,
           border: Borders.customOutlineInputBorder(),
@@ -162,6 +229,7 @@ class _DealershipScreen4State extends State<Dealership> {
         ),
         SpaceH20(),
         CustomTextFormField(
+          controller: _message,
           textInputType: TextInputType.text,
           labelText: StringConst.MESSAGE,
           border: Borders.customOutlineInputBorder(),
@@ -203,9 +271,9 @@ class _DealershipScreen4State extends State<Dealership> {
             ),
             SpaceW8(),
             Text(
-              StringConst.FILECHOOSEN,
+              _uploadedFileURL.length!=0?'files uploaded':StringConst.FILECHOOSEN,
               style: theme.textTheme.subtitle.copyWith(
-                color: AppTheme.blackShade10,
+                color: _uploadedFileURL.length!=0?AppTheme.green:AppTheme.blackShade10,
                 fontSize: Sizes.TEXT_SIZE_14,
               ),
             ),
@@ -234,15 +302,15 @@ class _DealershipScreen4State extends State<Dealership> {
                 color: AppTheme.grey,
                 height: Sizes.HEIGHT_30,
                 onPressed: () {
-                  _getDocuments();
+                  _pickSaveImage(user.userId);
                 },
               ),
             ),
             SpaceW8(),
             Text(
-              StringConst.FILECHOOSEN,
+              _uploadedFileURLPAN.length!=0?'files uploaded':StringConst.FILECHOOSEN,
               style: theme.textTheme.subtitle.copyWith(
-                color: AppTheme.blackShade10,
+                color: _uploadedFileURLPAN.length!=0?AppTheme.green:AppTheme.blackShade10,
                 fontSize: Sizes.TEXT_SIZE_14,
               ),
             ),
@@ -281,11 +349,74 @@ class _DealershipScreen4State extends State<Dealership> {
             ),
             color: AppTheme.green,
             height: Sizes.HEIGHT_40,
-            onPressed: () {},
+            onPressed: () {
+              addDealership();
+            },
           ),
         )
       ],
     );
+  }
+
+  Future<void> addDealership() async {
+    var email = _email.text;
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+
+    if (_name.text.length == 0) {
+      Fluttertoast.showToast(msg: 'Please Fill the name');
+    } else if (_email.text.length == 0)  {
+      Fluttertoast.showToast(msg: 'Please Fill the email');
+    } else if (!emailValid)  {
+      Fluttertoast.showToast(msg: 'Enter the correct Email Address');
+    } else if (_address.text.length == 0) {
+      Fluttertoast.showToast(msg: 'Please Fill the address');
+    } else if (_mobile.text.length != 10) {
+      Fluttertoast.showToast(msg: 'Please Fill the mobile number');
+    } else if (_country.text.length == 0) {
+      Fluttertoast.showToast(msg: 'Please Fill the country');
+    } else if (_uploadedFileURL.length == 0) {
+      Fluttertoast.showToast(msg: 'Please Upload a Company Proof');
+    } else if (_uploadedFileURLPAN.length == 0) {
+      Fluttertoast.showToast(msg: 'Please Upload a Company Proof');
+    } else if (!isSwitched) {
+      Fluttertoast.showToast(msg: 'Accept the terms & Conditions');
+    } else {
+      _changeLoadingVisible();
+      Firestore.instance.document("Dealership/${user.userId}").setData({
+        'name': _name.text,
+        'email': _email.text,
+        'address': _address.text,
+        'mobile': _mobile.text,
+        'country': _country.text,
+        'message': _message.text,
+        'companyproof': _uploadedFileURL,
+        'pan': _uploadedFileURLPAN,
+      }).then((value) {
+        _changeLoadingVisible();
+        cleardata();
+      });
+    }
+  }
+
+  Future<void> _changeLoadingVisible() async {
+    setState(() {
+      _loadingVisible = !_loadingVisible;
+    });
+  }
+
+  void cleardata() {
+    _name.clear();
+    _email.clear();
+    _mobile.clear();
+    _address.clear();
+    _country.clear();
+    _message.clear();
+    setState(() {
+      _uploadedFileURL == null;
+      _uploadedFileURLPAN = null;
+    });
   }
 }
 
@@ -437,6 +568,7 @@ class CustomButton extends StatelessWidget {
 
 class CustomTextFormField extends StatelessWidget {
   final TextStyle textStyle;
+  final TextEditingController controller;
   final TextStyle hintTextStyle;
   final TextStyle labelStyle;
   final TextStyle titleStyle;
@@ -465,6 +597,7 @@ class CustomTextFormField extends StatelessWidget {
 
   CustomTextFormField({
     this.prefixIcon,
+    this.controller,
     this.suffixIcon,
     this.textStyle,
     this.hintTextStyle,
@@ -513,6 +646,7 @@ class CustomTextFormField extends StatelessWidget {
             onChanged: onChanged,
             validator: validator,
             inputFormatters: inputFormatters,
+            controller: controller,
             decoration: InputDecoration(
               contentPadding: contentPadding,
               labelText: labelText,

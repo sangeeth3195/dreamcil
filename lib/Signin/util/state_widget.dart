@@ -46,14 +46,14 @@ class _StateWidgetState extends State<StateWidget> {
 
   Future<Null> initUser() async {
     //print('...initUser...');
-    FirebaseUser firebaseUserAuth = await Auth.getCurrentFirebaseUser();
+    // FirebaseUser firebaseUserAuth = await Auth.getCurrentFirebaseUser();
     User user = await Auth.getUserLocal();
-    Settings settings = await Auth.getSettingsLocal();
+    // Settings settings = await Auth.getSettingsLocal();
     setState(() {
       state.isLoading = false;
-      state.firebaseUserAuth = firebaseUserAuth;
+      // state.firebaseUserAuth = firebaseUserAuth;
       state.user = user;
-      state.settings = settings;
+      // state.settings = settings;
     });
   }
 

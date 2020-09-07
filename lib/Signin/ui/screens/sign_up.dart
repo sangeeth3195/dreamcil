@@ -232,9 +232,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             lastName: lastName,
           ));
         });
+
         //now automatically login user too
         //await StateWidget.of(context).logInUser(email, password);
-        await Navigator.pushNamed(context, '/signin');
+        await Navigator.pushNamedAndRemoveUntil(context, '/home',(Route<dynamic> route) => false);
       } catch (e) {
         _changeLoadingVisible();
         print("Sign Up Error: $e");
