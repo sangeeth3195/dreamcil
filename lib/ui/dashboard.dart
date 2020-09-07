@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:core';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dreamcil/ui/addcart.dart';
+import 'package:dreamcil/ui/details.dart';
 import 'package:dreamcil/ui/profile.dart';
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -34,43 +36,7 @@ class DashboardHome extends StatefulWidget {
   }
 }
 
-Widget _imgCarousel() {
-  return Container(
-    height: 150,
-    child: Carousel(
-      overlayShadow: true,
-      overlayShadowColors: Colors.black38,
-      dotSize: 4.0,
-      autoplay: true,
-      animationCurve: Curves.bounceInOut,
-      dotBgColor: Colors.transparent,
-      boxFit: BoxFit.cover,
-      images: [
-        AssetImage('assets/banner/banner.jpg'),
-        AssetImage('assets/banner/banner1.png'),
-        AssetImage('assets/banner/banner2.jpg'),
-        AssetImage('assets/banner/banner.jpg'),
-        AssetImage('assets/banner/banner1.png'),
-        AssetImage('assets/banner/banner2.jpg'),
-      ],
-    ),
-  );
-}
-
 class HomePage extends State<DashboardHome> {
-  List<String> listHeader = [
-    'HEADER1',
-    'HEADER2',
-    'HEADER3',
-    'HEADER4',
-  ];
-  List<String> listTitle = [
-    'title1',
-    'title2',
-    'title3',
-    'title4',
-  ];
-
   Widget tabBody = Container(
     color: AppTheme.background,
   );
@@ -101,71 +67,6 @@ class HomePage extends State<DashboardHome> {
           body: Stack(
             children: <Widget>[body(context), header(), footer()],
           ),
-          /* body: Builder(builder: (BuildContext context) {
-            return Stack(
-              children: <Widget>[
-                Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                      '      Dreamcil',
-                      style: TextStyle(
-                        color: Colors.green,
-                        letterSpacing: .8,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(
-                          Icons.add_shopping_cart,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-                            return CartScreen();
-                          }));
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.notifications,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-                            return NotificationScreen();
-                          }));
-                        },
-                      ),
-                      InkWell(
-                        child: Container(
-                          margin: EdgeInsets.all(8),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-                                return Profile();
-                              }));
-                            },
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage('https://firebasestorage.googleapis.com/v0/b/dl-flutter-ui-challenges.appspot.com/o/img%2F1.jpg?alt=media'),
-                              backgroundColor: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  body: _imgCarousel(),
-                ),
-              ],
-            );
-          }),*/
         ),
       ),
     );
@@ -269,38 +170,83 @@ class HomePage extends State<DashboardHome> {
           top: 200,
           left: 0,
           right: 0,
-          child: new ListView.builder(
-            itemCount: listHeader.length,
-            itemBuilder: (context, index) {
-              return new GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: listTitle.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                ),
-                itemBuilder: (contxt, indx) {
-                  return Card(
-                    margin: EdgeInsets.all(4.0),
-                    color: Colors.black26,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, top: 6.0, bottom: 2.0),
-                      child: Center(
-                          child: Text(
-                        listTitle[indx],
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
-                      )),
-                    ),
-                  );
-                },
-              );
+          child: new StreamBuilder(
+            stream:
+                Firestore.instance.collection('products').limit(20).snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.pink)));
+              } else {
+                return getExpenseItems(snapshot);
+              }
             },
-            shrinkWrap: true,
           ),
         ),
       ],
+    );
+  }
+
+  Widget getExpenseItems(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: snapshot.data.documents.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1,
+      ),
+      itemBuilder: (contxt, indx) {
+        return Card(
+          margin: EdgeInsets.all(4.0),
+          color: Colors.purpleAccent,
+          child: Stack(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Details(
+                          name: snapshot.data.documents[indx].data['name'], picture: snapshot.data.documents[indx].data['pic'],price: snapshot.data.documents[indx].data['Price'],),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  child: Image.network(
+                    snapshot.data.documents[indx].data['pic'].toString(),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Container(
+                  child: Positioned(
+                      bottom: 10.0,
+                      child: Column(
+                        children: <Widget>[
+                          Center(
+                              child: Text(
+                            snapshot.data.documents[indx].data['name']
+                                .toString(),
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          )),
+                          Center(
+                              child: Text(
+                            "₹ " +
+                                snapshot.data.documents[indx].data['Price']
+                                    .toString(),
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          )),
+                        ],
+                      )))
+            ],
+          ),
+        );
+      },
     );
   }
 

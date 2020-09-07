@@ -1,4 +1,5 @@
 import 'package:documents_picker/documents_picker.dart';
+import 'package:dreamcil/Signin/util/validator.dart';
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:dreamcil/utils/borders.dart';
 import 'package:flutter/material.dart';
@@ -102,13 +103,14 @@ class _DealershipScreen4State extends State<Dealership> {
           focusedBorder: Borders.customOutlineInputBorder(
             color: AppTheme.violetShade200,
           ),
+          validator: Validator.validateName,
           labelStyle: Styles.customTextStyle(),
           hintTextStyle: Styles.customTextStyle(),
           textStyle: Styles.customTextStyle(),
         ),
         SpaceH20(),
         CustomTextFormField(
-          textInputType: TextInputType.text,
+          textInputType: TextInputType.emailAddress,
           labelText: StringConst.EMAIL_ADDRESS,
           border: Borders.customOutlineInputBorder(),
           enabledBorder: Borders.customOutlineInputBorder(),
