@@ -3,6 +3,7 @@ import 'package:dreamcil/ui/addcart.dart';
 import 'package:dreamcil/ui/broucher.dart';
 import 'package:dreamcil/ui/dashboard.dart';
 import 'package:dreamcil/ui/help_screen.dart';
+import 'package:dreamcil/ui/login.dart';
 import 'package:dreamcil/ui/notification.dart';
 import 'package:dreamcil/ui/profile.dart';
 import 'package:dreamcil/ui/videos.dart';
@@ -10,6 +11,8 @@ import 'package:dreamcil/ui/wishlist.dart';
 import 'package:dreamcil/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
+import 'Signin/models/user.dart';
+import 'Signin/util/auth.dart';
 import 'custom_drawer/drawer_user_controller.dart';
 import 'custom_drawer/home_drawer.dart';
 import 'ui/dealership.dart';
@@ -25,12 +28,20 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget screenView;
   DrawerIndex drawerIndex;
+  User user;
 
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = const Dashboard();
     super.initState();
+    Auth.getUserLocal().then((value){
+      user=value;
+      if(user==null){
+        Navigator.pushNamed(context, '/signin');
+      }
+    });
+
   }
 
   @override

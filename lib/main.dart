@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       theme: buildTheme(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => HomeScreen(),
-        '/home': (context) => NavigationHomeScreen(),//GridHeader
+        '/': (context) => NavigationHomeScreen(),
+        '/home': (context) => NavigationHomeScreen(),
         '/signin': (context) => LoginPage(),
         '/signup': (context) => SignUpScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),

@@ -93,6 +93,7 @@ class _LoginPage extends State<LoginPage> {
         _loadingVisible = true;
       });
 
+
       await _googleSignIn.signIn();
 
       try {
@@ -101,7 +102,7 @@ class _LoginPage extends State<LoginPage> {
           if (doc.data != null) {
             User user = await Auth.getUserFirestore(id);
             await Auth.storeUserLocal(user);
-            await Navigator.pushNamed(context, '/home');
+            await Navigator.pushNamedAndRemoveUntil(context, '/home',(Route<dynamic> route) => false);
           } else {
             _showDialog(
                 _googleSignIn.currentUser.id,
@@ -166,7 +167,7 @@ class _LoginPage extends State<LoginPage> {
       await _changeLoadingVisible();
       //need await so it has chance to go through error if found.
       await StateWidget.of(context).logInUser(email, password);
-      await Navigator.pushNamed(context, '/addproduct');
+      await Navigator.pushNamedAndRemoveUntil(context, '/home',(Route<dynamic> route) => false);
     } catch (e) {
       _changeLoadingVisible();
       print("Sign In Error: $e");
