@@ -1,4 +1,5 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
+import 'package:dreamcil/ui/orderdetails.dart';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -39,9 +40,9 @@ class HomeWidgetState extends State<MyOrdersView>
     var _theme = Theme.of(context);
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('My Orders'),
+        title: Text('My Orders',style: TextStyle(color: Colors.black),),
         elevation: 0,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
@@ -59,7 +60,7 @@ class HomeWidgetState extends State<MyOrdersView>
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: new BubbleTabIndicator(
             indicatorHeight: 35.0,
-            indicatorColor: Colors.green,
+            indicatorColor: Colors.black,
             tabBarIndicatorSize: TabBarIndicatorSize.tab,
           ),
           tabs: tabs,
@@ -69,6 +70,186 @@ class HomeWidgetState extends State<MyOrdersView>
       body: new TabBarView(
         controller: _tabController,
         children: tabs.map((Tab tab) {
+          return Expanded(
+              child: ListView.builder(
+            itemCount: 3,
+            itemExtent: 170,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    decoration: BoxDecoration(
+
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.lightGray,
+                          blurRadius: 8,
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                      color: AppColors.backgroundLight,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              RichText(
+                                  text: TextSpan(children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Order: ',
+                                  style: _theme.textTheme.display1.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                TextSpan(
+                                  text: '#' + '19478935',
+                                  style: _theme.textTheme.display1.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ])),
+                              Text(
+                                '1995-12-12',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    'Tacking Number: ',
+                                    style: _theme.textTheme.display1.copyWith(
+                                        fontSize: 15,
+                                        ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      'IwE78946252245',
+                                      style: _theme.textTheme.display1.copyWith(
+                                        fontSize: 17,color: Colors.black,                                    fontWeight: FontWeight.bold,
+
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        'Quantity: ',
+                                        style: _theme.textTheme.display1
+                                            .copyWith(
+                                                fontSize: 15,
+                                                ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 4),
+                                        child: Text(
+                                          '250',
+                                          style: _theme.textTheme.display1
+                                              .copyWith(
+                                              fontWeight: FontWeight.bold,
+
+                                              fontSize: 17,color:
+                                          Colors.black
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        'Totat Amount: ',
+                                        style: _theme.textTheme.display1
+                                            .copyWith(
+                                                fontSize: 17,
+                                               ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          '\$' + '456',
+                                          //total amount
+                                          style: _theme.textTheme.display1
+                                              .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15, color:
+                                          Colors.black
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              RaisedButton(
+                                padding: EdgeInsets.only(
+                                    left: 10, right: 10, top: 10, bottom: 10),
+                                color: AppColors.white,
+                                onPressed: () {
+                                  Fluttertoast.showToast(msg: 'Click');
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => OrderDetails()));
+
+                                  /*onClick(order.id);*/
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: BorderSide(
+                                        color: AppColors.black, width: 2)),
+                                child: Text(
+                                  'Details',
+                                  style: _theme.textTheme.display1.copyWith(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Text('Delivered',style: TextStyle(color: Colors.green),),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ));
+
+              return new Row(
+                children: <Widget>[
+                  Icon(Icons.access_alarm),
+                  Text(' Entry $index'),
+                ],
+              );
+            },
+          ));
           return Container(
               padding: EdgeInsets.all(4),
               child: Container(
@@ -337,7 +518,6 @@ class HomeWidgetState extends State<MyOrdersView>
                   ],
                 ),
               ));*/
-
         }).toList(),
       ),
     );

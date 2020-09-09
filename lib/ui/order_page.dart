@@ -73,83 +73,83 @@ class _OrderState extends State<OrderPage> {
                   SizedBox(
                     height: 40,
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 24,
-                                width: 24,
-                                decoration: BoxDecoration(
-                                    border:
-                                    Border.all(color: Colors.grey.shade300),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Center(
-                                  child: Text(
-                                    prodPrice,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text("*"),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      prodName,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    /*SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text(
-                                      orderItems[index].secondaryText,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey.shade500),
-                                    ),*/
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                prodPrice,
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 14,
-                          ),
-                          Divider(
-                            thickness: 1.3,
-                            color: Colors.grey.shade200,
-                            height: 1,
-                          ),
-                          SizedBox(
-                            height: 14,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                  // ListView.builder(
+                  //   shrinkWrap: true,
+                  //   physics: NeverScrollableScrollPhysics(),
+                  //   itemBuilder: (context, index) {
+                  //     return Column(
+                  //       children: <Widget>[
+                  //         Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           children: <Widget>[
+                  //             Container(
+                  //               height: 24,
+                  //               width: 24,
+                  //               decoration: BoxDecoration(
+                  //                   border:
+                  //                   Border.all(color: Colors.grey.shade300),
+                  //                   borderRadius: BorderRadius.circular(5)),
+                  //               child: Center(
+                  //                 child: Text(
+                  //                   prodPrice.toString(),
+                  //                   style: TextStyle(
+                  //                       fontWeight: FontWeight.bold,
+                  //                       fontSize: 12),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 8,
+                  //             ),
+                  //             Text("*"),
+                  //             SizedBox(
+                  //               width: 8,
+                  //             ),
+                  //             Expanded(
+                  //               child: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: <Widget>[
+                  //                   Text(
+                  //                     prodName.toString(),
+                  //                     style: TextStyle(
+                  //                         fontWeight: FontWeight.w600),
+                  //                   ),
+                  //                   /*SizedBox(
+                  //                     height: 8,
+                  //                   ),
+                  //                   Text(
+                  //                     orderItems[index].secondaryText,
+                  //                     style: TextStyle(
+                  //                         fontSize: 12,
+                  //                         color: Colors.grey.shade500),
+                  //                   ),*/
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             Text(
+                  //               prodPrice.toString(),
+                  //               style: TextStyle(
+                  //                   color: Colors.green,
+                  //                   fontSize: 17,
+                  //                   fontWeight: FontWeight.bold),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         SizedBox(
+                  //           height: 14,
+                  //         ),
+                  //         Divider(
+                  //           thickness: 1.3,
+                  //           color: Colors.grey.shade200,
+                  //           height: 1,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 14,
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

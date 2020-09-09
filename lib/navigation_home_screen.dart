@@ -2,10 +2,12 @@
 import 'package:dreamcil/ProductAdd.dart';
 import 'package:dreamcil/ui/addcart.dart';
 import 'package:dreamcil/ui/broucher.dart';
+import 'package:dreamcil/ui/cart.dart';
 import 'package:dreamcil/ui/dashboard.dart';
 import 'package:dreamcil/ui/help_screen.dart';
 import 'package:dreamcil/ui/login.dart';
 import 'package:dreamcil/ui/notification.dart';
+import 'package:dreamcil/ui/orderview.dart';
 import 'package:dreamcil/ui/profile.dart';
 import 'package:dreamcil/ui/videos.dart';
 import 'package:dreamcil/ui/wishlist.dart';
@@ -118,7 +120,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         });
       }else if (drawerIndex == DrawerIndex.Wishlist) {
         setState(() {
-          screenView = WishList();
+          screenView = MyOrdersView();
         });
       }else if (drawerIndex == DrawerIndex.Notifications) {
         setState(() {
@@ -130,7 +132,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         });
       }else if (drawerIndex == DrawerIndex.About) {
         setState(() {
-          screenView = Profile();
+          screenView = MyOrdersView();
+        });
+      } else if (drawerIndex == DrawerIndex.MyOrders) {
+        setState(() {
+          screenView = MyOrdersView();
         });
       } else {
         //do in your way......

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dreamcil/Signin/ui/widgets/loading.dart';
 import 'package:dreamcil/Signin/util/auth.dart';
 import 'package:dreamcil/ui/order_page.dart';
 import 'package:flushbar/flushbar.dart';
@@ -43,9 +44,10 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: productColors[1],
-        body: Column(
+        child: Scaffold(
+      backgroundColor: productColors[1],
+      body: LoadingScreen(
+        child: Column(
           children: <Widget>[
             Expanded(
               child: Container(
@@ -252,13 +254,15 @@ class _DetailsState extends State<Details> {
                             flex: 1,
                             child: RaisedButton(
                               onPressed: () {
+                                Fluttertoast.showToast(msg: 'null');
+
                                 _addtoCart(
-                                    productName: name,
-                                    pic: picture,
-                                    percentage: price,
-                                    price: price,
-                                    dis_price: price,
-                                    context: context);
+                                  name,
+                                  picture,
+                                  price,
+                                  price,
+                                  price,
+                                );
                               },
                               color: beige,
                               child: Center(
@@ -285,13 +289,9 @@ class _DetailsState extends State<Details> {
                             flex: 1,
                             child: RaisedButton(
                               onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return OrderPage(prod_name: name,
-                                        prod_pic: picture,
-                                        prod_quantity: '1',
-                                        prod_price: '1000',);
-                                    }));
+                                Navigator.pushReplacement(
+                                    context, MaterialPageRoute(builder: (context) => OrderPage(prod_name: '',prod_pic: '',prod_price: '',prod_quantity: '',)));
+
                               },
                               color: Colors.green,
                               child: Center(
@@ -323,8 +323,9 @@ class _DetailsState extends State<Details> {
             )
           ],
         ),
+        inAsyncCall: _loadingVisible,
       ),
-    );
+    ));
   }
 
   Future<void> _changeLoadingVisible() async {
@@ -334,14 +335,13 @@ class _DetailsState extends State<Details> {
   }
 
   void _addtoCart(
-      {String productName,
-      String pic,
-      String percentage,
-      String price,
-      String dis_price,
-      BuildContext context}) async {
+    String productName,
+    String pic,
+    String percentage,
+    String price,
+    String dis_price,
+  ) async {
     try {
-      SystemChannels.textInput.invokeMethod('TextInput.hide');
       _changeLoadingVisible();
       firestoreInstance.collection("add_to_cart").add({
         "name": productName,
@@ -358,7 +358,7 @@ class _DetailsState extends State<Details> {
       String exception = Auth.getExceptionText(e);
       Flushbar(
         title: "Something went Wrong!",
-        message: exception,
+        message: exception.toString(),
         duration: Duration(seconds: 3),
       )..show(context);
     }
