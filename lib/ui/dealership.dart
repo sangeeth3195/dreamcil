@@ -57,7 +57,6 @@ class _DealershipScreen4State extends State<Dealership> {
     storageReference.getDownloadURL().then((fileURL) {
       setState(() {
         _changeLoadingVisible();
-
         _uploadedFileURL = fileURL;
       });
     });

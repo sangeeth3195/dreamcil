@@ -168,42 +168,7 @@ class _OrderState extends State<OrderPage> {
                   SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Delivery",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade500),
-                      ),
-                      Text(
-                        "\$1.60",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade500),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Total",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        "\$71.20",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+
                   Text(
                     "Address",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
