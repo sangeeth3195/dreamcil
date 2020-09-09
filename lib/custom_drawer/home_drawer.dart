@@ -43,6 +43,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.video_library),
       ),
       DrawerList(
+        index: DrawerIndex.AddProduct,
+        labelName: 'Add Product',
+        icon: Icon(Icons.add_box),
+      ), DrawerList(
         index: DrawerIndex.Dealership,
         labelName: 'Dealership',
         icon: Icon(Icons.file_upload),
@@ -314,6 +318,7 @@ enum DrawerIndex {
   Videos,
   Share,
   Dealership,
+  AddProduct,
   About,
   Invite,
   Broucher,
